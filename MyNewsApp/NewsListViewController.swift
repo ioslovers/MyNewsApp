@@ -11,8 +11,13 @@ import UIKit
 final class NewsListViewController: UIViewController {
     
     @IBOutlet private var tableView: UITableView!
-    var newsData: [Asset]?
-    let activityIndicator = UIActivityIndicatorView(frame: .zero)
+    var newsListViewModel: NewsListViewControllerModel?
+    
+    lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(frame: .zero)
+        activityIndicator.style = .gray
+        return activityIndicator
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,21 +26,33 @@ final class NewsListViewController: UIViewController {
     }
     
     private func setUpView() {
-        title = "News"
-        tableView.accessibilityIdentifier = "newsTableViewIdentifier"
+        
+        /// Setting up navigation bar
+        title = NSLocalizedString("localiseNewsTitle", comment: "")
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         UINavigationBar.appearance().prefersLargeTitles = true
-        activityIndicator.color = UIColor.darkGray
-        let barButton = UIBarButtonItem(customView: activityIndicator)
-        self.navigationItem.setRightBarButton(barButton, animated: true)
         
+        
+        /// Setting up Activity Indicator
+        let rightBarButton = UIBarButtonItem(customView: activityIndicator)
+        self.navigationItem.setLeftBarButton(rightBarButton, animated: true)
+        
+        //Refresh Button
+        let leftBarButton = UIBarButtonItem(title: NSLocalizedString("localiseRefreshButton", comment: ""),
+                                            style: .plain,
+                                            target: self,
+                                            action: #selector(refresh))
+        self.navigationItem.setRightBarButton(leftBarButton, animated: true)
+        
+        /// Setting up table view
         tableView.register(UINib(nibName: String(describing: NewsListCell.self),
                                  bundle: Bundle(for: NewsListCell.self)),
                            forCellReuseIdentifier: NewsListCell.cellId)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.accessibilityIdentifier = ConstantIdentifiers.newsTableViewIdentifier.rawValue
     }
     
     @objc func refresh(_ sender: Any) {
@@ -48,14 +65,12 @@ final class NewsListViewController: UIViewController {
             guard let self = self else { return }
             switch result {
             case .success(let newsData):
-                self.newsData = newsData.assets
-                self.newsData?.sort(by: { $0.timeStamp > $1.timeStamp})
+                self.newsListViewModel = NewsListViewControllerModel(newsData: newsData.assets)
             case .failure(let error):
-                let alert = Alert.init(title: nil,
-                                       subTitle: error.localizedDescription,
-                                       buttonTitles: [],
-                                       cancelTitle: "Ok")
-                alert.presentAlert(from: self, actionHandler: { (_, _) in }, cancelHandler: nil)
+                let alert = Alert.init(subTitle: error.localizedDescription,
+                                       cancelTitle: NSLocalizedString("localiseAlertButtonOk", comment: ""))
+                
+                alert.presentAlert(from: self)
                 
             }
             
@@ -69,12 +84,12 @@ final class NewsListViewController: UIViewController {
 
 extension NewsListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return  self.newsData?.count ?? 0
+        return  newsListViewModel?.sortedNews()?.count ?? ConstantNumber.noOfRows.rawValue
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let asset = self.newsData?[indexPath.row] else { return UITableViewCell() }
+        guard let asset = self.newsListViewModel?.sortedNews()?[indexPath.row] else { return UITableViewCell() }
         
         let newsListViewModel = NewsListCellDataSource(asset: asset)
         if let cell = tableView.dequeueReusableCell(withIdentifier: NewsListCell.cellId) as? NewsListCell {
@@ -93,7 +108,7 @@ extension NewsListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        guard let asset = self.newsData?[indexPath.row] else { return }
+        guard let asset = self.newsListViewModel?.sortedNews()?[indexPath.row] else { return }
         
         let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
         if let newsDetailViewController = mainStoryboard.instantiateViewController(withIdentifier: "NewsDetailViewController") as? NewsDetailViewController {

@@ -15,9 +15,9 @@ final public class Alert {
     let buttonTitles: [String]?
     let cancelTitle: String
     
-    public init (title: String?,
-                 subTitle: String?,
-                 buttonTitles:[String],
+    public init (title: String? = nil,
+                 subTitle: String? = nil,
+                 buttonTitles:[String]? = nil,
                  cancelTitle: String) {
         self.title = title
         self.subTitle = subTitle
@@ -26,8 +26,8 @@ final public class Alert {
     }
     
     public func presentAlert(from: UIViewController,
-                                   actionHandler: @escaping (UIAlertAction, Int) -> Void,
-                                   cancelHandler: ((UIAlertAction) -> Void)?) {
+                             actionHandler: ((UIAlertAction, Int) -> Void)? = nil,
+                                   cancelHandler: ((UIAlertAction) -> Void)? = nil) {
         
         let alert = UIAlertController(title: title,
                                       message: subTitle,
@@ -37,7 +37,8 @@ final public class Alert {
             let action = UIAlertAction(title: $0,
                                        style: .default,
                                        handler: { [weak alert] action in
-                                        let index = (alert?.actions.firstIndex(of: action) ?? 0) as Int
+                                        let index = (alert?.actions.firstIndex(of: action) ?? ConstantNumber.noOfRows.rawValue) as Int
+                                        guard let actionHandler = actionHandler else { return }
                                         actionHandler(action, index)
             })
             alert.addAction(action)

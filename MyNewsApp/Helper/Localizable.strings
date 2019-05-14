@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  MyNewsApp
+
+  Created by Ashish Tripathi on 14/05/19.
+  Copyright © 2019 Ashish Tripathi. All rights reserved.
+*/
+
+"localiseNewsTitle"     = "News";
+"localiseAlertButtonOk" = "ok";
+"localiseRefreshButton" = "Refresh";
+"localiseNewsThumnailImage" = "News thumbnail image";

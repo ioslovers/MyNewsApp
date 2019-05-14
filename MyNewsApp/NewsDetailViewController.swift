@@ -12,16 +12,22 @@ import WebKit
 class NewsDetailViewController: UIViewController {
     @IBOutlet private var webView: WKWebView!
     public var asset: Asset?
-    let activityIndicator = UIActivityIndicatorView(frame: .zero)
+    
+    lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(frame: .zero)
+        activityIndicator.style = .gray
+        activityIndicator.startAnimating()
+        return activityIndicator
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         webView.navigationDelegate = self
-        activityIndicator.color = UIColor.darkGray
-        activityIndicator.startAnimating()
+        
         let barButton = UIBarButtonItem(customView: activityIndicator)
         self.navigationItem.setRightBarButton(barButton, animated: true)
+        
         title = asset?.headline
         
         guard let urlString = asset?.url,
