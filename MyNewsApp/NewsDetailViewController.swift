@@ -24,6 +24,7 @@ class NewsDetailViewController: UIViewController {
         super.viewDidLoad()
         
         webView.navigationDelegate = self
+        webView.accessibilityIdentifier = ConstantIdentifiers.webViewIdentifier.rawValue
         
         let barButton = UIBarButtonItem(customView: activityIndicator)
         self.navigationItem.setRightBarButton(barButton, animated: true)

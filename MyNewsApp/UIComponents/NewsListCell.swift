@@ -14,6 +14,7 @@ public protocol NewsListCellData {
     var body: UIElementValue<String> { get }
     var footer: UIElementValue<String> { get }
     var icon: UIElementValue<String> { get }
+    var cellValue: UIElementValue<String> { get }
 }
 
 final public class NewsListCell: UITableViewCell {
@@ -58,6 +59,9 @@ final public class NewsListCell: UITableViewCell {
         iconView.loadThumbnail(urlSting: data.icon.rawValue)
         iconView.accessibilityLabel = data.icon.accessibilityValue
         iconView.accessibilityIdentifier = data.icon.accessibilityIdentifier
+        
+        accessibilityLabel = data.cellValue.accessibilityValue
+        accessibilityIdentifier = data.cellValue.accessibilityIdentifier
 
     }
 

@@ -17,9 +17,7 @@ public enum Result<T> {
 
 final class Networking: NSObject {
     
-    // MARK: - Private variable and functions
-    private static let baseUrl = "https://bruce-v2-mob.fairfaxmedia.com.au/1/coding_test/13ZZQX/full"
-    
+    // MARK: - Private functions
     private static func getData(url: URL,
                                 completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
         URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
@@ -29,8 +27,15 @@ final class Networking: NSObject {
     
     /// fetchNews function will fetch the news stories and returns
     /// Result<NewsData> as completion handler
-    public static func fetchNews(completion: @escaping (Result<NewsData>) -> Void) {
-        guard let url = URL(string: baseUrl) else { return }
+    public static func fetchNews(shouldFail: Bool = false, completion: @escaping (Result<NewsData>) -> Void) {
+        var urlString: String?
+        if shouldFail {
+            urlString = "https://www.ashishtripathi.com.au/"
+        } else {
+            urlString = EndPoints.prod.rawValue
+        }
+        
+        guard let mainUrlString = urlString,  let url = URL(string: mainUrlString) else { return }
         
         Networking.getData(url: url) { (data, response, error) in
             

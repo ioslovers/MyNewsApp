@@ -28,11 +28,11 @@ class MyNewsAppUITests: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-
+    
     func testNewsDetailsScreen() {
         newsApp.launch()
         let newsTable =  newsApp.tables.matching(identifier: "newsTableViewIdentifier")
-        let newsCell = newsTable.cells.element(matching: .cell, identifier: "newsCell_1")
+        let newsCell = newsTable.cells.element(matching: .cell, identifier: "NewsCell_1030276917")
         newsCell.tap()
         newsApp.activate()
     }
@@ -45,4 +45,15 @@ class MyNewsAppUITests: XCTestCase {
         
         XCTAssertNotNil(newsTable)
     }
+    
+    func testTableViewDetail() {
+        newsApp.launch()
+        
+        // Assert that we are displaying the tableview
+        let newsTable =  newsApp.tables.matching(identifier: "webViewIdentifier")
+        let newsCell = newsTable.cells.element(matching: .cell, identifier: "NewsCell_1030276917")
+        newsCell.tap()
+        XCTAssertNotNil(newsTable)
+    }
+    
 }

@@ -18,4 +18,5 @@ public enum ConstantIdentifiers: String {
     case cellBodyIdentifier = "newsBodyIdentifier"
     case cellFooterTitleIdentifier = "newsFooterIdentifier"
     case cellIconIdentifier = "newsIconIdentifier"
+    case webViewIdentifier = "webViewIdentifier"
 }

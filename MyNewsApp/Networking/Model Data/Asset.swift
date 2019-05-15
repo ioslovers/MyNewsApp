@@ -16,7 +16,7 @@ struct Asset: Codable {
     let categories: [Category]?
     let companies: [Company]?
     let headline: String
-    let id: Int?
+    let id: Int
     let indexHeadline: String?
     let lastModified: Int?
     let legalStatus: String?

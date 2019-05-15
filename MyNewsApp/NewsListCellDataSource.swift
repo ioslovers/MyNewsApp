@@ -18,6 +18,16 @@ final class NewsListCellDataSource {
 }
 
 extension NewsListCellDataSource: NewsListCellData {
+    var cellValue: UIElementValue<String> {
+        guard let asset = asset else {
+            return UIElementValue(rawValue: "")
+        }
+        let cellAccessebilityValue = "News Headline \(asset.headline) News Abstract is \(asset.theAbstract) Reported By \(asset.byLine) at \(asset.timeStamp.formattedDateString())"
+        return UIElementValue(rawValue: "",
+                              accessibilityValue: cellAccessebilityValue,
+                              accessibilityIdentifier: "NewsCell_\(asset.id)")
+    }
+    
     var title: UIElementValue<String> {
         guard let asset = asset else {
             return UIElementValue(rawValue: "")
