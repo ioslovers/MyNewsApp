@@ -22,7 +22,8 @@ extension NewsListCellDataSource: NewsListCellData {
         guard let asset = asset else {
             return UIElementValue(rawValue: "")
         }
-        let cellAccessebilityValue = "News Headline \(asset.headline) News Abstract is \(asset.theAbstract) Reported By \(asset.byLine) at \(asset.timeStamp.formattedDateString())"
+        let footerString = String(format: "%@ \n %@", arguments: [asset.byLine, asset.timeStamp.formattedDateString()])
+        let cellAccessebilityValue = String(format: NSLocalizedString("localiseCellAccessibilityText", comment: ""), arguments: [asset.headline, asset.theAbstract, footerString])
         return UIElementValue(rawValue: "",
                               accessibilityValue: cellAccessebilityValue,
                               accessibilityIdentifier: "NewsCell_\(asset.id)")

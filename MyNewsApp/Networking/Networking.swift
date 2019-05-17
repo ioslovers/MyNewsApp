@@ -30,7 +30,7 @@ final class Networking: NSObject {
     public static func fetchNews(shouldFail: Bool = false, completion: @escaping (Result<NewsData>) -> Void) {
         var urlString: String?
         if shouldFail {
-            urlString = "https://www.ashishtripathi.com.au/"
+            urlString = EndPoints.test.rawValue
         } else {
             urlString = EndPoints.prod.rawValue
         }

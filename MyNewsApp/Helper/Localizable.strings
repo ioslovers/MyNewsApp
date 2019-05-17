@@ -10,3 +10,5 @@
 "localiseAlertButtonOk" = "ok";
 "localiseRefreshButton" = "Refresh";
 "localiseNewsThumnailImage" = "News thumbnail image";
+"localiseCellAccessibilityText" = "News Headline %@ News Abstract is %@ Reported By %@ at %@ ";
+
