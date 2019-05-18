@@ -38,6 +38,7 @@
 		399AEF45228C27EA002C88FB /* EndPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399AEF44228C27EA002C88FB /* EndPoints.swift */; };
 		399AEF46228C2A91002C88FB /* MyNews.json in Resources */ = {isa = PBXBuildFile; fileRef = 399AEF3E228C1DF1002C88FB /* MyNews.json */; };
 		399AEF4A228D6DC5002C88FB /* NewsListCellDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399AEF49228D6DC5002C88FB /* NewsListCellDataSource.swift */; };
+		39B63D59229038EA004A8168 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 39B63D58229038EA004A8168 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +95,7 @@
 		399AEF3E228C1DF1002C88FB /* MyNews.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MyNews.json; sourceTree = "<group>"; };
 		399AEF44228C27EA002C88FB /* EndPoints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndPoints.swift; sourceTree = "<group>"; };
 		399AEF49228D6DC5002C88FB /* NewsListCellDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsListCellDataSource.swift; sourceTree = "<group>"; };
+		39B63D58229038EA004A8168 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 		2E1419972286CF790078BCD9 = {
 			isa = PBXGroup;
 			children = (
+				39B63D58229038EA004A8168 /* README.md */,
 				2E1419A22286CF790078BCD9 /* MyNewsApp */,
 				2E1419B72286CF7A0078BCD9 /* MyNewsAppTests */,
 				2E1419C22286CF7A0078BCD9 /* MyNewsAppUITests */,
@@ -365,6 +368,7 @@
 			files = (
 				399AEF38228AD363002C88FB /* Localizable.strings in Resources */,
 				2E1419AE2286CF7A0078BCD9 /* LaunchScreen.storyboard in Resources */,
+				39B63D59229038EA004A8168 /* README.md in Resources */,
 				2E1419AB2286CF7A0078BCD9 /* Assets.xcassets in Resources */,
 				2E1419A92286CF790078BCD9 /* Main.storyboard in Resources */,
 				399AEF3F228C1DF1002C88FB /* MyNews.json in Resources */,
