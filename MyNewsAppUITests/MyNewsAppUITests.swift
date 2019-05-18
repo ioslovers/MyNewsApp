@@ -26,34 +26,24 @@ class MyNewsAppUITests: XCTestCase {
     }
 
     override func tearDown() {
+        newsApp = nil
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
+    
     func testNewsDetailsScreen() {
         newsApp.launch()
-        let newsTable =  newsApp.tables.matching(identifier: "newsTableViewIdentifier")
-        let newsCell = newsTable.cells.element(matching: .cell, identifier: "NewsCell_1030276917")
-        newsCell.tap()
-        newsApp.activate()
+        newsApp.tables["newsTableViewIdentifier"].cells["NewsCell_1520130938"].staticTexts["newsBodyIdentifier"].tap()
     }
     
     func testTableInteraction() {
         newsApp.launch()
-        
-        // Assert that we are displaying the tableview
         let newsTable =  newsApp.tables.matching(identifier: "newsTableViewIdentifier")
-        
         XCTAssertNotNil(newsTable)
     }
     
     func testTableViewDetail() {
         newsApp.launch()
-        
-        // Assert that we are displaying the tableview
-        let newsTable =  newsApp.tables.matching(identifier: "webViewIdentifier")
-        let newsCell = newsTable.cells.element(matching: .cell, identifier: "NewsCell_1030276917")
-        newsCell.tap()
-        XCTAssertNotNil(newsTable)
+        newsApp.navigationBars["News"].buttons["Refresh"].tap()
     }
-    
 }

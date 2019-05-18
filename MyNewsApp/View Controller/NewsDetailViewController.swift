@@ -10,19 +10,32 @@ import UIKit
 import WebKit
 
 class NewsDetailViewController: UIViewController {
-    @IBOutlet private var webView: WKWebView!
-    public var asset: Asset?
     
-    lazy var activityIndicator: UIActivityIndicatorView = {
+    // MARK: - Private Outlets and Variable
+    @IBOutlet private var webView: WKWebView!
+    private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView(frame: .zero)
         activityIndicator.style = .gray
         activityIndicator.startAnimating()
         return activityIndicator
     }()
-
+    
+    // MARK: - Public Outlets
+    public var asset: Asset?
+    
+    // MARK: - View Controller life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        /// Setting view the View
+        setUpView()
+        
+        /// Load webView
+        loadWebView()
+    }
+    
+    // MARK: - View Controller life cycle
+    private func setUpView() {
         webView.navigationDelegate = self
         webView.accessibilityIdentifier = ConstantIdentifiers.webViewIdentifier.rawValue
         
@@ -30,7 +43,10 @@ class NewsDetailViewController: UIViewController {
         self.navigationItem.setRightBarButton(barButton, animated: true)
         
         title = asset?.headline
-        
+    }
+    
+    // MARK: - load webView
+    private func loadWebView() {
         guard let urlString = asset?.url,
             let url = URL(string: urlString)  else { return }
         

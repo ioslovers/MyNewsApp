@@ -23,7 +23,7 @@ struct MyNewsFonts: Font {
 
 struct MyNewsBasicColors: BasicColors {
     var title = UIColor.black
-    var body = UIColor.black
+    var body = UIColor.blue
 }
 
 struct MyNewsBasicFont: BasicFonts {

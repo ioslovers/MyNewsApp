@@ -10,10 +10,11 @@ import UIKit
 
 final class NewsListViewController: UIViewController {
     
+    // MARK: - Private Outlets and Variable
     @IBOutlet private var tableView: UITableView!
-    var newsListViewModel: NewsListViewControllerModel?
     
-    lazy var activityIndicator: UIActivityIndicatorView = {
+    private var newsListViewModel: NewsListViewControllerModel?
+    private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView(frame: .zero)
         activityIndicator.style = .gray
         return activityIndicator
@@ -21,7 +22,11 @@ final class NewsListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        /// UI Setup for news list
         setUpView()
+        
+        /// Fetching latest news
         fetchNews()
     }
     
@@ -55,25 +60,29 @@ final class NewsListViewController: UIViewController {
         tableView.accessibilityIdentifier = ConstantIdentifiers.newsTableViewIdentifier.rawValue
     }
     
-    @objc func refreshNews(_ sender: Any) {
-        activityIndicator.startAnimating()
+    /// Refresh button action
+    @objc private func refreshNews(_ sender: Any) {
         fetchNews()
     }
     
     private func fetchNews() {
+        activityIndicator.startAnimating()
         Networking.fetchNews { [weak self] (result) in
             guard let self = self else { return }
             switch result {
             case .success(let newsData):
                 self.newsListViewModel = NewsListViewControllerModel(newsData: newsData.assets)
             case .failure(let error):
-                let alert = Alert.init(subTitle: error.localizedDescription,
-                                       cancelTitle: NSLocalizedString("localiseAlertButtonOk", comment: ""))
                 
-                alert.presentAlert(from: self)
-                
+                /// Showing alert for errors
+                DispatchQueue.main.async() {
+                    let alert = Alert.init(subTitle: error.localizedDescription,
+                                           cancelTitle: NSLocalizedString("localiseAlertButtonOk", comment: ""))
+                    alert.presentAlert(from: self)
+                }
             }
             
+            /// Reload tableView and dismiss activity indicator
             DispatchQueue.main.async() {
                 self.activityIndicator.stopAnimating()
                 self.tableView.reloadData()
@@ -82,9 +91,11 @@ final class NewsListViewController: UIViewController {
     }
 }
 
-extension NewsListViewController: UITableViewDelegate, UITableViewDataSource {
+extension NewsListViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return  newsListViewModel?.sortedNews()?.count ?? ConstantNumber.noOfRows.rawValue
+        guard let sortedNews = self.newsListViewModel?.sortedNews() else { return ConstantNumber.noOfRows.rawValue }
+        return  sortedNews.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -102,6 +113,9 @@ extension NewsListViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         }
     }
+}
+
+extension NewsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -115,4 +129,6 @@ extension NewsListViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 }
+
+
 

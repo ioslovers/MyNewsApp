@@ -9,7 +9,7 @@
 import UIKit
 
 final class NewsListCellDataSource {
-    let asset: Asset?
+    private let asset: Asset?
     
     //Dependencies injection
     init(asset: Asset) {
@@ -18,6 +18,8 @@ final class NewsListCellDataSource {
 }
 
 extension NewsListCellDataSource: NewsListCellData {
+    
+    /// News cell value for voice over accessibility text and cell identifier for UI Automation
     var cellValue: UIElementValue<String> {
         guard let asset = asset else {
             return UIElementValue(rawValue: "")
@@ -29,6 +31,7 @@ extension NewsListCellDataSource: NewsListCellData {
                               accessibilityIdentifier: "NewsCell_\(asset.id)")
     }
     
+    /// News cell title and for voice over accessibility text and cell identifier for UI Automation
     var title: UIElementValue<String> {
         guard let asset = asset else {
             return UIElementValue(rawValue: "")
@@ -38,6 +41,7 @@ extension NewsListCellDataSource: NewsListCellData {
                               accessibilityIdentifier: ConstantIdentifiers.cellTitleIdentifier.rawValue)
     }
     
+    /// News cell body and voice over accessibility text and cell identifier for UI Automation
     var body: UIElementValue<String> {
         guard let asset = asset else {
             return UIElementValue(rawValue: "")
@@ -47,6 +51,7 @@ extension NewsListCellDataSource: NewsListCellData {
                               accessibilityIdentifier: ConstantIdentifiers.cellBodyIdentifier.rawValue)
     }
     
+    /// News cell footer and voice over accessibility text and cell identifier for UI Automation
     var footer: UIElementValue<String> {
         guard let asset = asset else {
             return UIElementValue(rawValue: "")
@@ -57,6 +62,7 @@ extension NewsListCellDataSource: NewsListCellData {
                               accessibilityIdentifier: ConstantIdentifiers.cellFooterTitleIdentifier.rawValue)
     }
     
+    /// News cell footer and voice over accessibility text and cell identifier for UI Automation
     var icon: UIElementValue<String> {
         var images = asset?.relatedImages
         
