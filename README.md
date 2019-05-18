@@ -53,13 +53,13 @@
 
 
 * Code Compilation instructions for the IDE/Plugin expected, dependency management, etc
-> [@ashish]I am using XCode 10.1 with no dependency tool required.
+> [@ashish]I am using Xcode 10.1 and Swift 4.2 with no dependency tool required.
 
 * Short description explaining architecture (e.g View, ViewModel...)
 > [@ashish] I am using MVVM.
 
 * Any 3rd party libraries used and rational
-> [@ashish] I am not third party library.
+> [@ashish] I am not using any third party library.
 
 * Explain what each test does in comments or in a document format
 > [@ashish] 
